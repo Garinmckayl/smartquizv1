@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.anchormind.smartquiz",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.10.1",
+    "applicationType": "monolith",
+    "baseName": "smartquiz",
+    "packageName": "com.anchormind.smartquiz",
+    "packageFolder": "com/anchormind/smartquiz",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ODZiMjViMWY1MDUxNDkwYTY5ZTI0ZmE1NjAxN2IxMDYzYmFhYWM3YmM4NmNhYWVjZWY4MzFmMDgxNTQ2MWE2YTgxZGI0YjRmZDIzMDg5Y2I2YTdkYzg3NGQ2OGJjY2FjMzI5OTQxODkwMzhhNzJjNWM4N2M1NzViOWZhMWM5NGY=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "react",
+    "clientTheme": "united",
+    "clientThemeVariant": "primary",
+    "creationTimestamp": 1599692027874,
+    "testFrameworks": ["gatling"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": ["en"],
+    "blueprints": []
+  }
+}
