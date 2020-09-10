@@ -1,18 +1,22 @@
 package com.anchormind.smartquiz.config;
 
-import com.github.mongobee.Mongobee;
+import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.SpringDataMongo3Driver;
+import com.github.cloudyrock.spring.v5.MongockSpring5;
 
 import io.github.jhipster.config.JHipsterConstants;
-import io.github.jhipster.domain.util.JSR310DateConverters.*;
-
+import io.github.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
+import io.github.jhipster.domain.util.JSR310DateConverters.DurationToLongConverter;
+import io.github.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.Cloud;
-import org.springframework.cloud.CloudException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.config.java.AbstractCloudConfig;
-import org.springframework.cloud.service.ServiceInfo;
-import org.springframework.cloud.service.common.MongoServiceInfo;
-import org.springframework.context.annotation.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,9 +24,6 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Configuration
@@ -57,21 +58,16 @@ public class CloudDatabaseConfiguration extends AbstractCloudConfig {
     }
 
     @Bean
-    public Mongobee mongobee(MongoDbFactory mongoDbFactory, MongoTemplate mongoTemplate, Cloud cloud) {
-        log.debug("Configuring Cloud Mongobee");
-        List<ServiceInfo> matchingServiceInfos = cloud.getServiceInfos(MongoDbFactory.class);
-
-        if (matchingServiceInfos.size() != 1) {
-            throw new CloudException("No unique service matching MongoDbFactory found. Expected 1, found "
-                + matchingServiceInfos.size());
-        }
-        MongoServiceInfo info = (MongoServiceInfo) matchingServiceInfos.get(0);
-        Mongobee mongobee = new Mongobee(info.getUri());
-        mongobee.setDbName(mongoDbFactory.getDb().getName());
-        mongobee.setMongoTemplate(mongoTemplate);
-        // package to scan for migrations
-        mongobee.setChangeLogsScanPackage("com.anchormind.smartquiz.config.dbmigrations");
-        mongobee.setEnabled(true);
-        return mongobee;
+    public MongockSpring5.MongockInitializingBeanRunner mongockInitializingBeanRunner(ApplicationContext springContext,
+        MongoTemplate mongoTemplate,
+        @Value("${mongock.lock.lockAcquiredForMinutes:5}") long lockAcquiredForMinutes,
+        @Value("${mongock.lock.maxWaitingForLockMinutes:3}") long maxWaitingForLockMinutes,
+        @Value("${mongock.lock.maxTries:3}") int maxTries) {
+        SpringDataMongo3Driver driver = SpringDataMongo3Driver.withLockSetting(mongoTemplate, lockAcquiredForMinutes, maxWaitingForLockMinutes, maxTries);
+        return MongockSpring5.builder()
+            .setDriver(driver)
+            .addChangeLogsScanPackage("<%= packageName %>.config.dbmigrations")
+            .setSpringContext(springContext)
+            .buildInitializingBeanRunner();
     }
 }

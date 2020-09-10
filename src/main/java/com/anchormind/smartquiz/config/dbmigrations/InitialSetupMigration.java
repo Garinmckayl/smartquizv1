@@ -4,9 +4,9 @@ import com.anchormind.smartquiz.domain.Authority;
 import com.anchormind.smartquiz.domain.User;
 import com.anchormind.smartquiz.security.AuthoritiesConstants;
 
-import com.github.mongobee.changeset.ChangeLog;
-import com.github.mongobee.changeset.ChangeSet;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import com.github.cloudyrock.mongock.ChangeLog;
+import com.github.cloudyrock.mongock.ChangeSet;
+import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.decorator.impl.MongockTemplate;
 
 import java.time.Instant;
 
@@ -17,7 +17,7 @@ import java.time.Instant;
 public class InitialSetupMigration {
 
     @ChangeSet(order = "01", author = "initiator", id = "01-addAuthorities")
-    public void addAuthorities(MongoTemplate mongoTemplate) {
+    public void addAuthorities(MongockTemplate mongoTemplate) {
         Authority adminAuthority = new Authority();
         adminAuthority.setName(AuthoritiesConstants.ADMIN);
         Authority userAuthority = new Authority();
@@ -27,7 +27,7 @@ public class InitialSetupMigration {
     }
 
     @ChangeSet(order = "02", author = "initiator", id = "02-addUsers")
-    public void addUsers(MongoTemplate mongoTemplate) {
+    public void addUsers(MongockTemplate mongoTemplate) {
         Authority adminAuthority = new Authority();
         adminAuthority.setName(AuthoritiesConstants.ADMIN);
         Authority userAuthority = new Authority();
