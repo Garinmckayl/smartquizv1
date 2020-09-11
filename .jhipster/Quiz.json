@@ -1,0 +1,82 @@
+{
+  "name": "Quiz",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "sourceUrl",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "QuizType",
+      "fieldValues": "TRUE_FALSE,MULTIPLE_CHOICE",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "level",
+      "fieldType": "QuizLevel",
+      "fieldValues": "EASY,MODERATE,HARD",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "numberOfQuestions",
+      "fieldType": "Integer",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "updatedBy",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "updatedDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20200910050914",
+  "entityTableName": "quiz",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

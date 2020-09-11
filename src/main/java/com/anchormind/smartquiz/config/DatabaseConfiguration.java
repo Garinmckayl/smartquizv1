@@ -7,8 +7,6 @@ import io.github.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeCo
 import io.github.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.ApplicationContext;
@@ -30,8 +28,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Import(value = MongoAutoConfiguration.class)
 @EnableMongoAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfiguration {
-
-    private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
     @Bean
     public ValidatingMongoEventListener validatingMongoEventListener() {

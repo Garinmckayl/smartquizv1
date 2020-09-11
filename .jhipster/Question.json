@@ -1,0 +1,52 @@
+{
+  "name": "Question",
+  "fields": [
+    {
+      "fieldName": "text",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "updatedBy",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "updatedDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20200910150259",
+  "entityTableName": "question",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

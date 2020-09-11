@@ -134,6 +134,11 @@
             <version>4.1.16</version>
         </dependency>
         <dependency>
+            <groupId>io.github.kaiso.relmongo</groupId>
+            <artifactId>relmongo</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
