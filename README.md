@@ -22,10 +22,7 @@ Run the following commands in two separate terminals to create a blissful develo
 auto-refreshes when files change on your hard drive.
 
 ```
-
 ./mvnw
-
-
 npm start
 ```
 
