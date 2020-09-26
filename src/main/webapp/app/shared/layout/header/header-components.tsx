@@ -26,13 +26,27 @@ export const Brand = props => (
 export const Home = props => (
   <NavItem>
     <NavLink tag={Link} to="/" className="d-flex align-items-center">
-      <FontAwesomeIcon icon="home" />
       <span>
         <Translate contentKey="global.menu.home">Home</Translate>
       </span>
     </NavLink>
+    <NavLink tag={Link} to="/pricing" className="">
+      <span>
+        <Translate contentKey="global.menu.pricing">Pricing</Translate>
+      </span>
+    </NavLink>
   </NavItem>
 );
+
+// export const Pricing = props => (
+//   <NavItem>
+//     <NavLink tag={Link} to="/pricing" className="d-flex align-items-center">
+//       <span>
+//         <Translate contentKey="global.menu.pricing">Pricing</Translate>
+//       </span>
+//     </NavLink>
+//   </NavItem>
+// );
 
 export const Quiz = props => (
   <NavItem>

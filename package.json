@@ -1,7 +1,7 @@
 {
   "name": "smartquiz",
   "version": "0.0.1-SNAPSHOT",
-  "description": "Description for smartquiz",
+  "description": "Generate quizzes",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [
