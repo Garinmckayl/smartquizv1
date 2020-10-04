@@ -1,7 +1,7 @@
 package com.anchormind.smartquiz.service.dto;
 
 import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
+import java.util.List;
 import java.io.Serializable;
 
 /**
@@ -14,6 +14,8 @@ public class QuizAttemptDTO implements Serializable {
     private QuizDTO quiz;
 
     private Integer attempted;
+
+    private List<AnswerDTO> answers;
 
     private Integer score;
 
@@ -49,6 +51,14 @@ public class QuizAttemptDTO implements Serializable {
 
     public void setAttempted(Integer attempted) {
         this.attempted = attempted;
+    }
+
+    public List<AnswerDTO> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerDTO> answers) {
+        this.answers = answers;
     }
 
     public Integer getScore() {
@@ -123,6 +133,7 @@ public class QuizAttemptDTO implements Serializable {
             "id=" + getId() +
             ", quiz=" + getQuiz() +
             ", attempted=" + getAttempted() +
+            ", answers=" + getAnswers() +
             ", score=" + getScore() +
             ", maxScore=" + getMaxScore() +
             ", createdBy='" + getCreatedBy() + "'" +
