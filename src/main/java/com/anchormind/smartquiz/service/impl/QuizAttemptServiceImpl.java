@@ -1,11 +1,13 @@
 package com.anchormind.smartquiz.service.impl;
 
+import com.anchormind.smartquiz.security.AuthoritiesConstants;
 import com.anchormind.smartquiz.security.SecurityUtils;
 import com.anchormind.smartquiz.service.QuizAttemptService;
 import com.anchormind.smartquiz.domain.QuizAttempt;
 import com.anchormind.smartquiz.repository.QuizAttemptRepository;
 import com.anchormind.smartquiz.service.dto.QuizAttemptDTO;
 import com.anchormind.smartquiz.service.mapper.QuizAttemptMapper;
+import com.anchormind.smartquiz.web.rest.errors.ForbiddenException;
 import java.time.ZonedDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +43,11 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
         if (quizAttempt.getId() == null) {
             quizAttempt.setCreatedBy(loggedInUser);
             quizAttempt.setCreatedDate(ZonedDateTime.now());
+        } else {
+            String createdBy = quizAttemptRepository.findById(quizAttempt.getId()).get().getCreatedBy();
+            if (! createdBy.equalsIgnoreCase(loggedInUser)) {
+                throw new ForbiddenException("Quiz Attempt cannot be modified by others.", "quiz-attempt", "notOwnerOfResource");
+            }
         }
         quizAttempt.setUpdatedBy(loggedInUser);
         quizAttempt.setUpdatedDate(ZonedDateTime.now());
@@ -66,6 +73,11 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
     @Override
     public void delete(String id) {
         log.debug("Request to delete QuizAttempt : {}", id);
+        String loggedInUser = SecurityUtils.getCurrentUserLogin().get();
+        String createdBy = quizAttemptRepository.findById(id).get().getCreatedBy();
+        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) || !createdBy.equalsIgnoreCase(loggedInUser)) {
+            throw new ForbiddenException("Quiz Attempt cannot be modified by others.", "quiz-attempt", "notOwnerOfResource");
+        }
         quizAttemptRepository.deleteById(id);
     }
 }
