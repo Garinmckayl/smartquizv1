@@ -1,6 +1,8 @@
 package com.anchormind.smartquiz.web.rest;
 
 import com.anchormind.smartquiz.service.QuizAttemptService;
+import com.anchormind.smartquiz.service.QuizService;
+import com.anchormind.smartquiz.service.dto.QuizDTO;
 import com.anchormind.smartquiz.web.rest.errors.BadRequestAlertException;
 import com.anchormind.smartquiz.service.dto.QuizAttemptDTO;
 
@@ -38,23 +40,26 @@ public class QuizAttemptResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final QuizService quizService;
     private final QuizAttemptService quizAttemptService;
 
-    public QuizAttemptResource(QuizAttemptService quizAttemptService) {
+    public QuizAttemptResource(
+        QuizService quizService,
+        QuizAttemptService quizAttemptService
+    ) {
+        this.quizService = quizService;
         this.quizAttemptService = quizAttemptService;
     }
 
     /**
-     * {@code POST  :quizId/quiz-attempts} : Create a new quizAttempt.
+     * {@code POST  /quiz-attempts} : Create a new quizAttempt.
      *
      * @param quizAttemptDTO the quizAttemptDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new quizAttemptDTO, or with status {@code 400 (Bad Request)} if the quizAttempt has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/{quizId}/quiz-attempts")
+    @PostMapping("/quiz-attempts")
     public ResponseEntity<QuizAttemptDTO> createQuizAttempt(
-        @PathVariable
-            String quizId,
         @Valid
         @RequestBody
             QuizAttemptDTO quizAttemptDTO
@@ -63,6 +68,11 @@ public class QuizAttemptResource {
         if (quizAttemptDTO.getId() != null) {
             throw new BadRequestAlertException("A new quizAttempt cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        QuizDTO quiz = quizService.findOne(quizAttemptDTO.getQuiz().getId()).get();
+        if (quiz == null) {
+            throw new BadRequestAlertException("Quiz does not exist for the provided Id", ENTITY_NAME, "invalidQuizId");
+        }
+        quizAttemptDTO.setQuiz(quiz);
         QuizAttemptDTO result = quizAttemptService.save(quizAttemptDTO);
         return ResponseEntity.created(new URI("/api/quiz-attempts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -78,15 +88,18 @@ public class QuizAttemptResource {
      * or with status {@code 500 (Internal Server Error)} if the quizAttemptDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{quizId}/quiz-attempts")
+    @PutMapping("/quiz-attempts")
     public ResponseEntity<QuizAttemptDTO> updateQuizAttempt(
-        @PathVariable
-            String quizId,
-        @Valid @RequestBody QuizAttemptDTO quizAttemptDTO
+        @Valid
+        @RequestBody QuizAttemptDTO quizAttemptDTO
     ) throws URISyntaxException {
         log.debug("REST request to update QuizAttempt : {}", quizAttemptDTO);
         if (quizAttemptDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        QuizDTO quiz = quizService.findOne(quizAttemptDTO.getQuiz().getId()).get();
+        if (quiz == null) {
+            throw new BadRequestAlertException("Quiz does not exist for the provided Id", ENTITY_NAME, "invalidQuizId");
         }
         QuizAttemptDTO result = quizAttemptService.save(quizAttemptDTO);
         return ResponseEntity.ok()

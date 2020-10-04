@@ -121,6 +121,7 @@ public class QuizAttemptDTO implements Serializable {
     public String toString() {
         return "QuizAttemptDTO{" +
             "id=" + getId() +
+            ", quiz=" + getQuiz() +
             ", attempted=" + getAttempted() +
             ", score=" + getScore() +
             ", maxScore=" + getMaxScore() +
