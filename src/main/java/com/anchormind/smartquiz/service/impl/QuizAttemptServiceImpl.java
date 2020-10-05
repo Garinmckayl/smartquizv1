@@ -1,5 +1,8 @@
 package com.anchormind.smartquiz.service.impl;
 
+import com.anchormind.smartquiz.domain.Answer;
+import com.anchormind.smartquiz.domain.Quiz;
+import com.anchormind.smartquiz.repository.QuizRepository;
 import com.anchormind.smartquiz.security.AuthoritiesConstants;
 import com.anchormind.smartquiz.security.SecurityUtils;
 import com.anchormind.smartquiz.service.QuizAttemptService;
@@ -27,11 +30,13 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
     private final Logger log = LoggerFactory.getLogger(QuizAttemptServiceImpl.class);
 
     private final QuizAttemptRepository quizAttemptRepository;
+    private final QuizRepository quizRepository;
 
     private final QuizAttemptMapper quizAttemptMapper;
 
-    public QuizAttemptServiceImpl(QuizAttemptRepository quizAttemptRepository, QuizAttemptMapper quizAttemptMapper) {
+    public QuizAttemptServiceImpl(QuizAttemptRepository quizAttemptRepository, QuizRepository quizRepository, QuizAttemptMapper quizAttemptMapper) {
         this.quizAttemptRepository = quizAttemptRepository;
+        this.quizRepository = quizRepository;
         this.quizAttemptMapper = quizAttemptMapper;
     }
 
@@ -48,6 +53,16 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
             if (! createdBy.equalsIgnoreCase(loggedInUser)) {
                 throw new ForbiddenException("Quiz Attempt cannot be modified by others.", "quiz-attempt", "notOwnerOfResource");
             }
+        }
+        Quiz quiz = quizRepository.findById(quizAttempt.getQuiz().getId()).get();
+        for (Answer answer : quizAttempt.getAnswers()) {
+           String correctAnswer = answer.getQuestion().getOptions().stream().filter(option -> option.getValue()).findFirst().get().getKey();
+           if (answer.getText().equalsIgnoreCase(correctAnswer)) {
+               answer.setCorrect(true);
+           }
+           quizAttempt.setAttempted(quizAttempt.getAnswers().size());
+           quizAttempt.setScore((int) quizAttempt.getAnswers().stream().filter(Answer::isCorrect).count());
+           quizAttempt.setMaxScore(quiz.getQuestions().size());
         }
         quizAttempt.setUpdatedBy(loggedInUser);
         quizAttempt.setUpdatedDate(ZonedDateTime.now());
