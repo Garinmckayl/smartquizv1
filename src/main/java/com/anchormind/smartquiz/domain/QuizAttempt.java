@@ -30,6 +30,10 @@ public class QuizAttempt implements Serializable {
     @JoinProperty(name="quiz")
     private Quiz quiz;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinProperty(name="answers")
+    private List<Answer> answers;
+
     @Field("attempted")
     private Integer attempted;
 
@@ -70,6 +74,14 @@ public class QuizAttempt implements Serializable {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public Integer getAttempted() {

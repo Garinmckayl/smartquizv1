@@ -1,5 +1,10 @@
 package com.anchormind.smartquiz.domain;
 
+import io.github.kaiso.relmongo.annotation.CascadeType;
+import io.github.kaiso.relmongo.annotation.FetchType;
+import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.ManyToOne;
+import io.github.kaiso.relmongo.annotation.OneToMany;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -23,6 +28,10 @@ public class Answer implements Serializable {
     @NotNull
     @Field("text")
     private String text;
+
+    @ManyToOne
+    @JoinProperty(name="question")
+    private Question question;
 
     @Field("correct")
     private boolean correct;
@@ -67,6 +76,14 @@ public class Answer implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public boolean isCorrect() {
