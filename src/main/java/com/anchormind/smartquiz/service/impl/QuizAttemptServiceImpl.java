@@ -55,15 +55,18 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
             }
         }
         Quiz quiz = quizRepository.findById(quizAttempt.getQuiz().getId()).get();
-        for (Answer answer : quizAttempt.getAnswers()) {
-           String correctAnswer = answer.getQuestion().getOptions().stream().filter(option -> option.getValue()).findFirst().get().getKey();
-           if (answer.getText().equalsIgnoreCase(correctAnswer)) {
-               answer.setCorrect(true);
-           }
-           quizAttempt.setAttempted(quizAttempt.getAnswers().size());
-           quizAttempt.setScore((int) quizAttempt.getAnswers().stream().filter(Answer::isCorrect).count());
-           quizAttempt.setMaxScore(quiz.getQuestions().size());
+        if (quizAttempt.getAnswers() != null) {
+            for (Answer answer : quizAttempt.getAnswers()) {
+                String correctAnswer = answer.getQuestion().getOptions().stream().filter(option -> option.getValue()).findFirst().get().getKey();
+                if (answer.getText().equalsIgnoreCase(correctAnswer)) {
+                    answer.setCorrect(true);
+                }
+                quizAttempt.setAttempted(quizAttempt.getAnswers().size());
+                quizAttempt.setScore((int) quizAttempt.getAnswers().stream().filter(Answer::isCorrect).count());
+                quizAttempt.setMaxScore(quiz.getQuestions().size());
+            }
         }
+
         quizAttempt.setUpdatedBy(loggedInUser);
         quizAttempt.setUpdatedDate(ZonedDateTime.now());
         quizAttempt = quizAttemptRepository.save(quizAttempt);
