@@ -1,0 +1,9 @@
+{
+  "home": {
+    "title": "Welcome, {{firstName}} {{lastName}}!",
+    "subtitle": "Learn smarter, not harder.",
+    "logged": {
+      "message": "You are logged in as user \"{{username}}\"."
+    }
+  }
+}

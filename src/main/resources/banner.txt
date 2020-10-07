@@ -1,0 +1,1 @@
+${AnsiColor.BRIGHT_BLUE}:: Smart Quiz 🤓  :: Running Spring Boot ${spring-boot.version} ::

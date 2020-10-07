@@ -1,0 +1,44 @@
+entity Quiz {
+  name String required
+  sourceUrl String required
+  type QuizType required
+  level QuizLevel required
+  numberOfQuestions Integer required
+  createdBy String required
+  createdDate ZonedDateTime required
+  updatedBy String required
+  updatedDate ZonedDateTime required
+}
+
+entity Question {
+  text String required
+  createdBy String required
+  createdDate ZonedDateTime required
+  updatedBy String required
+  updatedDate ZonedDateTime required
+}
+
+entity QuizAttempt {
+  attempted Integer
+  score Integer
+  maxScore Integer
+  createdBy String required
+  createdDate ZonedDateTime required
+  updatedBy String required
+  updatedDate ZonedDateTime required
+}
+
+enum QuizType {
+  TRUE_FALSE,
+  MULTIPLE_CHOICE
+}
+
+enum QuizLevel {
+  EASY,
+  MODERATE,
+  HARD
+}
+
+dto all with mapstruct
+paginate all with pagination
+service all with serviceImpl
