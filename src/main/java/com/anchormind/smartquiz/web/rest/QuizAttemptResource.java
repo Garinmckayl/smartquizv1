@@ -1,28 +1,34 @@
 package com.anchormind.smartquiz.web.rest;
 
 import com.anchormind.smartquiz.service.QuizAttemptService;
-import com.anchormind.smartquiz.web.rest.errors.BadRequestAlertException;
+import com.anchormind.smartquiz.service.QuizService;
 import com.anchormind.smartquiz.service.dto.QuizAttemptDTO;
-
+import com.anchormind.smartquiz.service.dto.QuizDTO;
+import com.anchormind.smartquiz.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * REST controller for managing {@link com.anchormind.smartquiz.domain.QuizAttempt}.
@@ -38,23 +44,26 @@ public class QuizAttemptResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final QuizService quizService;
     private final QuizAttemptService quizAttemptService;
 
-    public QuizAttemptResource(QuizAttemptService quizAttemptService) {
+    public QuizAttemptResource(
+        QuizService quizService,
+        QuizAttemptService quizAttemptService
+    ) {
+        this.quizService = quizService;
         this.quizAttemptService = quizAttemptService;
     }
 
     /**
-     * {@code POST  :quizId/quiz-attempts} : Create a new quizAttempt.
+     * {@code POST  /quiz-attempts} : Create a new quizAttempt.
      *
      * @param quizAttemptDTO the quizAttemptDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new quizAttemptDTO, or with status {@code 400 (Bad Request)} if the quizAttempt has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/{quizId}/quiz-attempts")
+    @PostMapping("/quiz-attempts")
     public ResponseEntity<QuizAttemptDTO> createQuizAttempt(
-        @PathVariable
-            String quizId,
         @Valid
         @RequestBody
             QuizAttemptDTO quizAttemptDTO
@@ -63,6 +72,11 @@ public class QuizAttemptResource {
         if (quizAttemptDTO.getId() != null) {
             throw new BadRequestAlertException("A new quizAttempt cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        QuizDTO quiz = quizService.findOne(quizAttemptDTO.getQuiz().getId()).get();
+        if (quiz == null) {
+            throw new BadRequestAlertException("Quiz does not exist for the provided Id", ENTITY_NAME, "invalidQuizId");
+        }
+        quizAttemptDTO.setQuiz(quiz);
         QuizAttemptDTO result = quizAttemptService.save(quizAttemptDTO);
         return ResponseEntity.created(new URI("/api/quiz-attempts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
@@ -78,15 +92,18 @@ public class QuizAttemptResource {
      * or with status {@code 500 (Internal Server Error)} if the quizAttemptDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{quizId}/quiz-attempts")
+    @PutMapping("/quiz-attempts")
     public ResponseEntity<QuizAttemptDTO> updateQuizAttempt(
-        @PathVariable
-            String quizId,
-        @Valid @RequestBody QuizAttemptDTO quizAttemptDTO
+        @Valid
+        @RequestBody QuizAttemptDTO quizAttemptDTO
     ) throws URISyntaxException {
         log.debug("REST request to update QuizAttempt : {}", quizAttemptDTO);
         if (quizAttemptDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        QuizDTO quiz = quizService.findOne(quizAttemptDTO.getQuiz().getId()).get();
+        if (quiz == null) {
+            throw new BadRequestAlertException("Quiz does not exist for the provided Id", ENTITY_NAME, "invalidQuizId");
         }
         QuizAttemptDTO result = quizAttemptService.save(quizAttemptDTO);
         return ResponseEntity.ok()

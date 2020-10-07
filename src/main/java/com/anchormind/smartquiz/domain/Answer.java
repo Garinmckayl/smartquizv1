@@ -3,22 +3,22 @@ package com.anchormind.smartquiz.domain;
 import io.github.kaiso.relmongo.annotation.CascadeType;
 import io.github.kaiso.relmongo.annotation.FetchType;
 import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.ManyToOne;
 import io.github.kaiso.relmongo.annotation.OneToMany;
-import io.github.kaiso.relmongo.annotation.OneToOne;
+import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.time.ZonedDateTime;
 
 /**
- * A QuizAttempt.
+ * An Answer.
  */
-@Document(collection = "quiz_attempt")
-public class QuizAttempt implements Serializable {
+@Document(collection = "answer")
+public class Answer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,22 +26,15 @@ public class QuizAttempt implements Serializable {
     private String id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinProperty(name="quiz")
-    private Quiz quiz;
+    @Field("text")
+    private String text;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinProperty(name="answers")
-    private List<Answer> answers;
+    @ManyToOne
+    @JoinProperty(name="question")
+    private Question question;
 
-    @Field("attempted")
-    private Integer attempted;
-
-    @Field("score")
-    private Integer score;
-
-    @Field("max_score")
-    private Integer maxScore;
+    @Field("correct")
+    private boolean correct;
 
     @NotNull
     @Field("created_by")
@@ -68,66 +61,44 @@ public class QuizAttempt implements Serializable {
         this.id = id;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
+    public String getText() {
+        return text;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public Integer getAttempted() {
-        return attempted;
-    }
-
-    public QuizAttempt attempted(Integer attempted) {
-        this.attempted = attempted;
+    public Answer text(String text) {
+        this.text = text;
         return this;
     }
 
-    public void setAttempted(Integer attempted) {
-        this.attempted = attempted;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public Integer getScore() {
-        return score;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public QuizAttempt score(Integer score) {
-        this.score = score;
-        return this;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
-    public Integer getMaxScore() {
-        return maxScore;
+    public boolean isCorrect() {
+        return correct;
     }
 
-    public QuizAttempt maxScore(Integer maxScore) {
-        this.maxScore = maxScore;
-        return this;
-    }
-
-    public void setMaxScore(Integer maxScore) {
-        this.maxScore = maxScore;
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public QuizAttempt createdBy(String createdBy) {
+    public Answer createdBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -140,7 +111,7 @@ public class QuizAttempt implements Serializable {
         return createdDate;
     }
 
-    public QuizAttempt createdDate(ZonedDateTime createdDate) {
+    public Answer createdDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
         return this;
     }
@@ -153,7 +124,7 @@ public class QuizAttempt implements Serializable {
         return updatedBy;
     }
 
-    public QuizAttempt updatedBy(String updatedBy) {
+    public Answer updatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
         return this;
     }
@@ -166,7 +137,7 @@ public class QuizAttempt implements Serializable {
         return updatedDate;
     }
 
-    public QuizAttempt updatedDate(ZonedDateTime updatedDate) {
+    public Answer updatedDate(ZonedDateTime updatedDate) {
         this.updatedDate = updatedDate;
         return this;
     }
@@ -181,10 +152,10 @@ public class QuizAttempt implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof QuizAttempt)) {
+        if (!(o instanceof Answer)) {
             return false;
         }
-        return id != null && id.equals(((QuizAttempt) o).id);
+        return id != null && id.equals(((Answer) o).id);
     }
 
     @Override
@@ -195,11 +166,10 @@ public class QuizAttempt implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "QuizAttempt{" +
+        return "Question{" +
             "id=" + getId() +
-            ", attempted=" + getAttempted() +
-            ", score=" + getScore() +
-            ", maxScore=" + getMaxScore() +
+            ", text='" + getText() + "'" +
+            ", correct='" + isCorrect() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +
