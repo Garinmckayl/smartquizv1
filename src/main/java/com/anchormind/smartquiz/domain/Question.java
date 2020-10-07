@@ -25,6 +25,7 @@ public class Question implements Serializable {
     @Field("text")
     private String text;
 
+    @Field("options")
     private List<Pair<String, Boolean>> options;
 
     @NotNull
