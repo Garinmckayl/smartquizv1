@@ -1,20 +1,24 @@
 package com.anchormind.smartquiz.domain;
 
+import io.github.kaiso.relmongo.annotation.CascadeType;
+import io.github.kaiso.relmongo.annotation.FetchType;
+import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.ManyToOne;
+import io.github.kaiso.relmongo.annotation.OneToMany;
+import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.time.ZonedDateTime;
 
 /**
- * A Question.
+ * An Answer.
  */
-@Document(collection = "question")
-public class Question implements Serializable {
+@Document(collection = "answer")
+public class Answer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,9 +29,12 @@ public class Question implements Serializable {
     @Field("text")
     private String text;
 
+    @ManyToOne
+    @JoinProperty(name="question")
+    private Question question;
 
-    @Field("options")
-    private List<Pair<String, Boolean>> options;
+    @Field("correct")
+    private boolean correct;
 
     @NotNull
     @Field("created_by")
@@ -58,7 +65,7 @@ public class Question implements Serializable {
         return text;
     }
 
-    public Question text(String text) {
+    public Answer text(String text) {
         this.text = text;
         return this;
     }
@@ -71,19 +78,27 @@ public class Question implements Serializable {
         return serialVersionUID;
     }
 
-    public List<Pair<String, Boolean>> getOptions() {
-        return options;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setOptions(List<Pair<String, Boolean>> options) {
-        this.options = options;
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public Question createdBy(String createdBy) {
+    public Answer createdBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -96,7 +111,7 @@ public class Question implements Serializable {
         return createdDate;
     }
 
-    public Question createdDate(ZonedDateTime createdDate) {
+    public Answer createdDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
         return this;
     }
@@ -109,7 +124,7 @@ public class Question implements Serializable {
         return updatedBy;
     }
 
-    public Question updatedBy(String updatedBy) {
+    public Answer updatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
         return this;
     }
@@ -122,7 +137,7 @@ public class Question implements Serializable {
         return updatedDate;
     }
 
-    public Question updatedDate(ZonedDateTime updatedDate) {
+    public Answer updatedDate(ZonedDateTime updatedDate) {
         this.updatedDate = updatedDate;
         return this;
     }
@@ -137,10 +152,10 @@ public class Question implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Question)) {
+        if (!(o instanceof Answer)) {
             return false;
         }
-        return id != null && id.equals(((Question) o).id);
+        return id != null && id.equals(((Answer) o).id);
     }
 
     @Override
@@ -154,6 +169,7 @@ public class Question implements Serializable {
         return "Question{" +
             "id=" + getId() +
             ", text='" + getText() + "'" +
+            ", correct='" + isCorrect() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +

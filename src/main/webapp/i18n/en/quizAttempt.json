@@ -3,8 +3,10 @@
     "quizAttempt": {
       "home": {
         "title": "Quiz Attempts",
-        "createLabel": "Create a new Quiz Attempt",
-        "createOrEditLabel": "Create or edit a Quiz Attempt",
+
+        "createLabel": "Create",
+        "createOrEditLabel": "Question",
+
         "notFound": "No Quiz Attempts found"
       },
       "created": "A new Quiz Attempt is created with identifier {{ param }}",

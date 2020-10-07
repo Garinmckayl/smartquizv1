@@ -1,3 +1,4 @@
+import './pricing.scss';
 import React from 'react';
 import { Translate, translate } from 'react-jhipster';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Alert, Row, Col } from 'reactstrap';
@@ -7,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 const Pricing = props => (
-  <div className="footer page-content">
+  <div className="page-content">
     <section className="pricing py-5">
   <div className="container">
     <div className="row">

@@ -15,6 +15,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 import Pricing from './pages/pricing/pricing';
+import Privacy from './pages/privacy/privacy';
 
 
 const Account = Loadable({
@@ -40,6 +41,7 @@ const Routes = () => (
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <ErrorBoundaryRoute path="/pricing" exact component={Pricing} />
+      <ErrorBoundaryRoute path="/pages/privacy" exact component={Privacy} />
       <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>

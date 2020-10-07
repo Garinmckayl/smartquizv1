@@ -1,26 +1,22 @@
 package com.anchormind.smartquiz.service.dto;
 
-import java.time.ZonedDateTime;
-
-import java.util.List;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
+import javax.validation.constraints.NotNull;
 
 /**
- * A DTO for the {@link com.anchormind.smartquiz.domain.QuizAttempt} entity.
+ * A DTO for the {@link com.anchormind.smartquiz.domain.Answer} entity.
  */
-public class QuizAttemptDTO implements Serializable {
+public class AnswerDTO implements Serializable {
 
     private String id;
 
-    private QuizDTO quiz;
+    private QuestionDTO question;
 
-    private Integer attempted;
+    @NotNull
+    private String text;
 
-    private List<AnswerDTO> answers;
-
-    private Integer score;
-
-    private Integer maxScore;
+    private boolean correct;
 
     private String createdBy;
 
@@ -38,44 +34,28 @@ public class QuizAttemptDTO implements Serializable {
         this.id = id;
     }
 
-    public QuizDTO getQuiz() {
-        return quiz;
+    public QuestionDTO getQuestion() {
+        return question;
     }
 
-    public void setQuiz(QuizDTO quiz) {
-        this.quiz = quiz;
+    public void setQuestion(QuestionDTO question) {
+        this.question = question;
     }
 
-    public Integer getAttempted() {
-        return attempted;
+    public String getText() {
+        return text;
     }
 
-    public void setAttempted(Integer attempted) {
-        this.attempted = attempted;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public List<AnswerDTO> getAnswers() {
-        return answers;
+    public boolean isCorrect() {
+        return correct;
     }
 
-    public void setAnswers(List<AnswerDTO> answers) {
-        this.answers = answers;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public Integer getMaxScore() {
-        return maxScore;
-    }
-
-    public void setMaxScore(Integer maxScore) {
-        this.maxScore = maxScore;
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 
     public String getCreatedBy() {
@@ -115,11 +95,11 @@ public class QuizAttemptDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof QuizAttemptDTO)) {
+        if (!(o instanceof AnswerDTO)) {
             return false;
         }
 
-        return id != null && id.equals(((QuizAttemptDTO) o).id);
+        return id != null && id.equals(((AnswerDTO) o).id);
     }
 
     @Override
@@ -130,13 +110,11 @@ public class QuizAttemptDTO implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "QuizAttemptDTO{" +
+        return "QuestionDTO{" +
             "id=" + getId() +
-            ", quiz=" + getQuiz() +
-            ", attempted=" + getAttempted() +
-            ", answers=" + getAnswers() +
-            ", score=" + getScore() +
-            ", maxScore=" + getMaxScore() +
+            ", question='" + getQuestion() + "'" +
+            ", text='" + getText() + "'" +
+            ", correct='" + isCorrect() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +
