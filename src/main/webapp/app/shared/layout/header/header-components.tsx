@@ -38,15 +38,9 @@ export const Home = props => (
   </NavItem>
 );
 
-// export const Pricing = props => (
-//   <NavItem>
-//     <NavLink tag={Link} to="/pricing" className="d-flex align-items-center">
-//       <span>
-//         <Translate contentKey="global.menu.pricing">Pricing</Translate>
-//       </span>
-//     </NavLink>
-//   </NavItem>
-// );
+
+
+
 
 export const Quiz = props => (
   <NavItem>
