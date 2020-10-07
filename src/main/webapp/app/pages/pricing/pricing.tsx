@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 const Pricing = props => (
-  <div className="footer page-content">
+  <div className="page-content">
     <section className="pricing py-5">
   <div className="container">
     <div className="row">

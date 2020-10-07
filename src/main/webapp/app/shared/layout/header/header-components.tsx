@@ -35,6 +35,7 @@ export const Home = props => (
 
 
 
+
 export const Quiz = props => (
   <NavItem>
     <NavLink tag={Link} to="/quiz" className="d-flex align-items-center">
@@ -45,6 +46,7 @@ export const Quiz = props => (
     </NavLink>
   </NavItem>
 );
+
 
 export const Pricing = props => (
   <NavItem>

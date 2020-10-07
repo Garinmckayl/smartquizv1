@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink as Link } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
+
 import {Home, Brand, Quiz, Pricing} from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 
@@ -30,14 +31,7 @@ const Header = (props: IHeaderProps) => {
     props.onLocaleChange(langKey);
   };
 
-  const renderDevRibbon = () =>
-    props.isInProduction === false ? (
-      <div className="ribbon dev">
-        <a href="">
-          <Translate contentKey={`global.ribbon.${props.ribbonEnv}`} />
-        </a>
-      </div>
-    ) : null;
+
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -45,7 +39,6 @@ const Header = (props: IHeaderProps) => {
 
   return (
     <div id="app-header">
-      {renderDevRibbon()}
       <LoadingBar className="loading-bar" />
       <Navbar className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
         <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
@@ -54,6 +47,7 @@ const Header = (props: IHeaderProps) => {
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
             {props.isAuthenticated && <Quiz/>}
+
             {/* {props.isAuthenticated && <EntitiesMenu />}*/}
             {props.isAuthenticated && props.isAdmin && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
             <Pricing/>

@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class QuizAttemptResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+
     private final QuizService quizService;
     private final QuizAttemptService quizAttemptService;
 
@@ -56,12 +58,14 @@ public class QuizAttemptResource {
     }
 
     /**
+
      * {@code POST  /quiz-attempts} : Create a new quizAttempt.
      *
      * @param quizAttemptDTO the quizAttemptDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new quizAttemptDTO, or with status {@code 400 (Bad Request)} if the quizAttempt has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+
     @PostMapping("/quiz-attempts")
     public ResponseEntity<QuizAttemptDTO> createQuizAttempt(
         @Valid
@@ -72,6 +76,7 @@ public class QuizAttemptResource {
         if (quizAttemptDTO.getId() != null) {
             throw new BadRequestAlertException("A new quizAttempt cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
         QuizDTO quiz = quizService.findOne(quizAttemptDTO.getQuiz().getId()).get();
         if (quiz == null) {
             throw new BadRequestAlertException("Quiz does not exist for the provided Id", ENTITY_NAME, "invalidQuizId");
@@ -92,6 +97,7 @@ public class QuizAttemptResource {
      * or with status {@code 500 (Internal Server Error)} if the quizAttemptDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+
     @PutMapping("/quiz-attempts")
     public ResponseEntity<QuizAttemptDTO> updateQuizAttempt(
         @Valid
@@ -101,6 +107,7 @@ public class QuizAttemptResource {
         if (quizAttemptDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
         QuizDTO quiz = quizService.findOne(quizAttemptDTO.getQuiz().getId()).get();
         if (quiz == null) {
             throw new BadRequestAlertException("Quiz does not exist for the provided Id", ENTITY_NAME, "invalidQuizId");

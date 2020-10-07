@@ -9,6 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link QuizAttempt} and its DTO {@link QuizAttemptDTO}.
  */
+
 @Mapper(componentModel = "spring", uses = {QuizMapper.class, QuestionMapper.class})
 public interface QuizAttemptMapper extends EntityMapper<QuizAttemptDTO, QuizAttempt> {
 

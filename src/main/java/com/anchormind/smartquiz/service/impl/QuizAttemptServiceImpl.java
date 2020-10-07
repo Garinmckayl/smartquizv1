@@ -1,5 +1,6 @@
 package com.anchormind.smartquiz.service.impl;
 
+
 import com.anchormind.smartquiz.domain.Answer;
 import com.anchormind.smartquiz.domain.Quiz;
 import com.anchormind.smartquiz.repository.QuizRepository;
@@ -10,6 +11,7 @@ import com.anchormind.smartquiz.domain.QuizAttempt;
 import com.anchormind.smartquiz.repository.QuizAttemptRepository;
 import com.anchormind.smartquiz.service.dto.QuizAttemptDTO;
 import com.anchormind.smartquiz.service.mapper.QuizAttemptMapper;
+
 import com.anchormind.smartquiz.web.rest.errors.ForbiddenException;
 import java.time.ZonedDateTime;
 import org.slf4j.Logger;
@@ -30,6 +32,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
     private final Logger log = LoggerFactory.getLogger(QuizAttemptServiceImpl.class);
 
     private final QuizAttemptRepository quizAttemptRepository;
+
     private final QuizRepository quizRepository;
 
     private final QuizAttemptMapper quizAttemptMapper;
@@ -48,6 +51,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
         if (quizAttempt.getId() == null) {
             quizAttempt.setCreatedBy(loggedInUser);
             quizAttempt.setCreatedDate(ZonedDateTime.now());
+
         } else {
             String createdBy = quizAttemptRepository.findById(quizAttempt.getId()).get().getCreatedBy();
             if (! createdBy.equalsIgnoreCase(loggedInUser)) {
@@ -91,6 +95,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
     @Override
     public void delete(String id) {
         log.debug("Request to delete QuizAttempt : {}", id);
+
         String loggedInUser = SecurityUtils.getCurrentUserLogin().get();
         String createdBy = quizAttemptRepository.findById(id).get().getCreatedBy();
         if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) || !createdBy.equalsIgnoreCase(loggedInUser)) {
