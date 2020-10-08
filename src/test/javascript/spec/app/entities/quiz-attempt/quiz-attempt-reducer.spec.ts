@@ -34,6 +34,7 @@ describe('Entities reducer tests', () => {
     totalItems: 0,
     updating: false,
     updateSuccess: false,
+    questions: [],
   };
 
   function testInitialState(state) {

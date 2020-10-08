@@ -23,6 +23,7 @@ const initialState = {
   updating: false,
   totalItems: 0,
   updateSuccess: false,
+  questions: [],
 };
 
 export type QuizAttemptState = Readonly<typeof initialState>;
@@ -72,6 +73,16 @@ export default (state: QuizAttemptState = initialState, action): QuizAttemptStat
         ...state,
         loading: false,
         entity: action.payload.data,
+        questions: [
+          'Alexander was a king of the ancient Greek kingdom of Macedona and a member of the Argead dynasty.',
+          'Alexander never lost a battle.',
+          'Alexander was crowned king at the age of 20.',
+          'Alexander was tutored by Aristotle until age 16.',
+          'Alexanderia in Egypt gets its name from Alexander the great.',
+          'Alexander married 3 times.',
+          'Alexander died in the palace of Nebuchadnezzar II, in Babylon, at age 32.',
+          "Bucephala was named after one of Alexander's horses.",
+        ],
       };
     case SUCCESS(ACTION_TYPES.CREATE_QUIZATTEMPT):
     case SUCCESS(ACTION_TYPES.UPDATE_QUIZATTEMPT):
@@ -117,20 +128,20 @@ export const getEntity: ICrudGetAction<IQuizAttempt> = id => {
   };
 };
 
+export const updateEntity: ICrudPutAction<IQuizAttempt> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_QUIZATTEMPT,
+    payload: axios.put(apiUrl, cleanEntity(entity)),
+  });
+  return result;
+};
+
 export const createEntity: ICrudPutAction<IQuizAttempt> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_QUIZATTEMPT,
     payload: axios.post(apiUrl, cleanEntity(entity)),
   });
   dispatch(getEntities());
-  return result;
-};
-
-export const updateEntity: ICrudPutAction<IQuizAttempt> = entity => async dispatch => {
-  const result = await dispatch({
-    type: ACTION_TYPES.UPDATE_QUIZATTEMPT,
-    payload: axios.put(apiUrl, cleanEntity(entity)),
-  });
   return result;
 };
 

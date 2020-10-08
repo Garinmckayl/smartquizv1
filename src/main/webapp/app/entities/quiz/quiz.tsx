@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './quiz.reducer';
+import { createEntity as createQuizAttempt } from '../quiz-attempt/quiz-attempt.reducer';
 import { IQuiz } from 'app/shared/model/quiz.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import { timeFromNow } from "app/shared/util/date-utils";
+import {convertDateTimeToServer, timeFromNow} from "app/shared/util/date-utils";
 import axios from 'axios';
 
 export interface IQuizProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -66,12 +67,14 @@ export const Quiz = (props: IQuizProps) => {
       activePage: currentPage,
     });
 
-  const attemptQuiz = quizId => () => {
-    // const quiz = { quizId : quizId };
-    // axios.post('https://reqres.in/api/articles', article)
-    //   .then(response => this.setState({ articleId: response.data.id }));
-    // props.history.push('/');
-    //props.history.push('/quiz/' + quizId + '/quiz-attempt/new');
+  const attemptQuiz = id => () => {
+    const quizAttempt = {
+      quiz : {
+        id
+      }
+    }
+    props.createQuizAttempt(quizAttempt);
+    props.history.push('/quiz-attempt');
   }
 
   const { quizList, match, loading, totalItems } = props;
@@ -158,6 +161,7 @@ const mapStateToProps = ({ quiz }: IRootState) => ({
 
 const mapDispatchToProps = {
   getEntities,
+  createQuizAttempt
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

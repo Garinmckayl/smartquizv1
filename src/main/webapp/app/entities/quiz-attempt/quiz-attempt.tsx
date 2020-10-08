@@ -68,12 +68,13 @@ export const QuizAttempt = (props: IQuizAttemptProps) => {
   return (
     <div>
       <h2 id="quiz-attempt-heading">
-        <Translate contentKey="smartquizApp.quizAttempt.home.title">Quiz Attempts</Translate>
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <FontAwesomeIcon icon="plus" />
-          &nbsp;
-          <Translate contentKey="smartquizApp.quizAttempt.home.createLabel">Create new Quiz Attempt</Translate>
-        </Link>
+        {/*<Translate contentKey="smartquizApp.quizAttempt.home.title">Quiz Attempts</Translate>*/}
+        My Quizzes
+        {/*<Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">*/}
+        {/*  <FontAwesomeIcon icon="plus" />*/}
+        {/*  &nbsp;*/}
+        {/*  <Translate contentKey="smartquizApp.quizAttempt.home.createLabel">Create new Quiz Attempt</Translate>*/}
+        {/*</Link>*/}
       </h2>
       <div className="table-responsive">
         {quizAttemptList && quizAttemptList.length > 0 ? (
@@ -112,12 +113,12 @@ export const QuizAttempt = (props: IQuizAttemptProps) => {
                 <tr key={`entity-${i}`}>
                   <td>
                     <Button tag={Link} to={`${match.url}/${quizAttempt.id}`} color="link" size="sm">
-                      {quizAttempt.id}
+                      {quizAttempt.quiz.name}
                     </Button>
                   </td>
-                  <td>{quizAttempt.attempted}</td>
-                  <td>{quizAttempt.score}</td>
-                  <td>{quizAttempt.maxScore}</td>
+                  <td>{quizAttempt.attempted ? quizAttempt.attempted : 0}</td>
+                  <td>{quizAttempt.score ? quizAttempt.score : 0}</td>
+                  <td>{quizAttempt.maxScore ? quizAttempt.maxScore : 100}</td>
                   <td>{quizAttempt.createdBy}</td>
                   <td>
                     {quizAttempt.createdDate ? <TextFormat type="date" value={quizAttempt.createdDate} format={APP_DATE_FORMAT} /> : null}
@@ -128,12 +129,12 @@ export const QuizAttempt = (props: IQuizAttemptProps) => {
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${quizAttempt.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
+                      {/*<Button tag={Link} to={`${match.url}/${quizAttempt.id}`} color="info" size="sm">*/}
+                      {/*  <FontAwesomeIcon icon="eye" />{' '}*/}
+                      {/*  <span className="d-none d-md-inline">*/}
+                      {/*    <Translate contentKey="entity.action.view">View</Translate>*/}
+                      {/*  </span>*/}
+                      {/*</Button>*/}
                       <Button
                         tag={Link}
                         to={`${match.url}/${quizAttempt.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -142,20 +143,21 @@ export const QuizAttempt = (props: IQuizAttemptProps) => {
                       >
                         <FontAwesomeIcon icon="pencil-alt" />{' '}
                         <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
+                          {/*<Translate contentKey="entity.action.edit">Take Quiz</Translate>*/}
+                          Take Quiz
                         </span>
                       </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${quizAttempt.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
+                      {/*<Button*/}
+                      {/*  tag={Link}*/}
+                      {/*  to={`${match.url}/${quizAttempt.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}*/}
+                      {/*  color="danger"*/}
+                      {/*  size="sm"*/}
+                      {/*>*/}
+                      {/*  <FontAwesomeIcon icon="trash" />{' '}*/}
+                      {/*  <span className="d-none d-md-inline">*/}
+                      {/*    <Translate contentKey="entity.action.delete">Delete</Translate>*/}
+                      {/*  </span>*/}
+                      {/*</Button>*/}
                     </div>
                   </td>
                 </tr>
