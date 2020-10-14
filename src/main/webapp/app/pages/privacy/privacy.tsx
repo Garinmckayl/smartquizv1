@@ -127,7 +127,7 @@ import { Link } from 'react-router-dom';
         <div className="text-container">
           <h3>How We Use SmartQuiz.me Landing Page Data</h3>
           <p>
-            SmartQuiz.me Landing Page Template uses visitors' data for the
+            SmartQuiz.me Landing Page Template uses visitors&apos; data for the
             following general purposes and for other specific ones that are
             important:
           </p>
