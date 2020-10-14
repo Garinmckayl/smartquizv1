@@ -12,6 +12,7 @@ import { IQuizAttempt } from 'app/shared/model/quiz-attempt.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 import question from "app/entities/question/question";
+import Score from "app/components/score";
 
 export interface IQuizAttemptUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -103,9 +104,9 @@ export const QuizAttemptUpdate = (props: IQuizAttemptUpdateProps) => {
                   </AvGroup>
                 </div>
               ) : (
-                <h3>
-                  Quiz Complete. Results are being computed.
-                </h3>
+                <div className="justify-center">
+                  <Score val={questions.length} max={questions.length}/>
+                </div>
               )}
 
             </AvForm>
