@@ -311,3 +311,19 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+#app-view-container {
+  position: relative;
+  min-height: 75vh;
+}
+
+.jh-card {
+  padding-bottom: 6rem; /* Footer height */
+}
+
+.page-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 6rem;
+}
