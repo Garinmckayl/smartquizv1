@@ -2,7 +2,7 @@ package com.anchormind.smartquiz.config;
 
 import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.SpringDataMongo3Driver;
 import com.github.cloudyrock.spring.v5.MongockSpring5;
-
+import com.github.cloudyrock.spring.v5.MongockSpring5.MongockInitializingBeanRunner;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
 import io.github.jhipster.domain.util.JSR310DateConverters.DurationToLongConverter;
@@ -58,15 +58,19 @@ public class CloudDatabaseConfiguration extends AbstractCloudConfig {
     }
 
     @Bean
-    public MongockSpring5.MongockInitializingBeanRunner mongockInitializingBeanRunner(ApplicationContext springContext,
+    public MongockInitializingBeanRunner mongockInitializingBeanRunner(
+        ApplicationContext springContext,
         MongoTemplate mongoTemplate,
-        @Value("${mongock.lock.lockAcquiredForMinutes:5}") long lockAcquiredForMinutes,
-        @Value("${mongock.lock.maxWaitingForLockMinutes:3}") long maxWaitingForLockMinutes,
-        @Value("${mongock.lock.maxTries:3}") int maxTries) {
+        @Value("${mongock.lock.lockAcquiredForMinutes:5}")
+            long lockAcquiredForMinutes,
+        @Value("${mongock.lock.maxWaitingForLockMinutes:3}")
+            long maxWaitingForLockMinutes,
+        @Value("${mongock.lock.maxTries:3}")
+            int maxTries) {
         SpringDataMongo3Driver driver = SpringDataMongo3Driver.withLockSetting(mongoTemplate, lockAcquiredForMinutes, maxWaitingForLockMinutes, maxTries);
         return MongockSpring5.builder()
             .setDriver(driver)
-            .addChangeLogsScanPackage("<%= packageName %>.config.dbmigrations")
+            .addChangeLogsScanPackage("com.anchormind.smartquiz.config.dbmigrations")
             .setSpringContext(springContext)
             .buildInitializingBeanRunner();
     }
