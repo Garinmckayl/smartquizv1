@@ -49,9 +49,9 @@ node {
         sh "./mvnw -ntp verify -P-webpack -Pprod -DskipTests"
         archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
-    stage('quality analysis') {
-        withSonarQubeEnv('http://sonarqube.anchormind.com') {
-            sh "./mvnw -ntp initialize sonar:sonar"
-        }
-    }
+    //stage('quality analysis') {
+    //    withSonarQubeEnv('http://sonarqube.anchormind.com') {
+    //        sh "./mvnw -ntp initialize sonar:sonar"
+    //    }
+    //}
 }
