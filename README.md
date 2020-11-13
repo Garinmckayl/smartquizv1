@@ -2,7 +2,13 @@
 
 # Smart Quiz
 
-This application was generated using JHipster 6.10.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.10.1](https://www.jhipster.tech/documentation-archive/v6.10.1).
+Tech Stack
+
+- Java 11
+- Maven
+- [JHipster v6.10.1](https://www.jhipster.tech/documentation-archive/v6.10.1)
+- Mongo
+- ReactJs
 
 ## Development
 
@@ -63,7 +69,8 @@ To launch your application's tests, run:
 
 ### Client tests
 
-Unit tests are run by [Jest][] and written with [Jasmine][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
+Unit tests are run by [Jest][] and written with [Jasmine][].  
+They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
 
 ```
 npm test

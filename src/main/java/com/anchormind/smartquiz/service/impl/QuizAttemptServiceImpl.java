@@ -6,13 +6,13 @@ import com.anchormind.smartquiz.domain.Quiz;
 import com.anchormind.smartquiz.repository.QuizRepository;
 import com.anchormind.smartquiz.security.AuthoritiesConstants;
 import com.anchormind.smartquiz.security.SecurityUtils;
+import com.anchormind.smartquiz.service.ForbiddenException;
 import com.anchormind.smartquiz.service.QuizAttemptService;
 import com.anchormind.smartquiz.domain.QuizAttempt;
 import com.anchormind.smartquiz.repository.QuizAttemptRepository;
 import com.anchormind.smartquiz.service.dto.QuizAttemptDTO;
 import com.anchormind.smartquiz.service.mapper.QuizAttemptMapper;
 
-import com.anchormind.smartquiz.web.rest.errors.ForbiddenException;
 import java.time.ZonedDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
